@@ -1,6 +1,7 @@
 package com.guesser.guesser;
 
 import Flag.modele.Iquizz;
+import Flag.modele.Pays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,8 @@ public class IndexController {
 
     @GetMapping
     public String home(final Model model) {
-        Quizz.Question();
+        Pays test = Quizz.Question();
+        System.out.println("Reponse dans le controlleur " + test.getNom() + " Et le code du pays "+test.getCode());
         model.addAttribute("appName", appName);
         return "index";
     }
