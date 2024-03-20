@@ -16,6 +16,8 @@ public class Quizz implements Iquizz{
     ArrayList<String> liste_Clef = new ArrayList<String>();
     Random random = new Random();
     int Chiffre_Choix_pays;
+
+    String url_drapeau = "https://flagcdn.com/w320/";
     public Pays Question(){
 
         client.get().uri("https://flagcdn.com/fr/codes.json").retrieve().bodyToMono(String.class) // Récupérer le corps de la réponse comme une chaîne de caractères
@@ -27,13 +29,14 @@ public class Quizz implements Iquizz{
                     Set<String> Liste_Clef =  jsonObject.keySet();
                     liste_Clef.addAll(Liste_Clef);
                     Chiffre_Choix_pays = random.nextInt(liste_Clef.size());
-                    System.out.println(liste_Clef);
+                    url_drapeau += liste_Clef.get(Chiffre_Choix_pays)+".png";
+
 
                 });
 
 
 
-            return new Pays("kl,l,",objet_avec_nom.get(liste_Clef.get(Chiffre_Choix_pays)).toString(), liste_Clef.get(Chiffre_Choix_pays));
+            return new Pays(url_drapeau,objet_avec_nom.get(liste_Clef.get(Chiffre_Choix_pays)).toString(), liste_Clef.get(Chiffre_Choix_pays));
     }
 
 
