@@ -20,10 +20,12 @@ public class IndexController {
 
     @GetMapping
     public String home(final Model model) {
-        Pays test = Quizz.Question();
+        Pays question = Quizz.Question();
 
-        System.out.println("Reponse dans le controlleur " + test.getNom() + " Et le code du pays "+test.getCode() +" et l'URL du pays : "+test.getDrapeau());
+        System.out.println("Reponse dans le controlleur " + question.getNom() + " Et le code du pays "+question.getCode() +" et l'URL du pays : "+question.getDrapeau());
         model.addAttribute("appName", appName);
+        model.addAttribute("Question",question);
+
         return "index";
     }
 }
