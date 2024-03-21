@@ -3,43 +3,63 @@ package com.guesser.guesser;
 import Flag.modele.IpropFlag;
 import Flag.modele.Iquizz;
 import Flag.modele.Pays;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 
 
 @Controller
-@RequestMapping("/toto")
 public class IndexController {
     @Value("${spring.application.name}")
     private String appName;
     @Autowired
-    public Iquizz Quizz;
+    private Iquizz Quizz;
     @Autowired
-    public IpropFlag proposition;
+    private IpropFlag Proposition;
+    private int Score = 0;
 
 
-    @GetMapping
-    public String home(final Model model) {
+    @GetMapping("/toto")
+    public String home(final Model model, HttpSession session) {
         Pays question = Quizz.Question();
-        ArrayList<Pays> p = proposition.Proposition_Drapeau("fr");
+        ArrayList<Pays> proposition = Proposition.Proposition_Drapeau(question.getCode());
         System.out.println("###########################");
-        for (int i =0;i<p.size();i++){
+        for (int i =0;i<proposition.size();i++){
 
-            System.out.println("le nom est "+p.get(i).getNom());
-            System.out.println(" Le code est "+p.get(i).getCode());
-            System.out.println(" Le drapeau est "+p.get(i).getDrapeau());
+            System.out.println("le nom est "+proposition.get(i).getNom());
+            System.out.println(" Le code est "+proposition.get(i).getCode());
+            System.out.println(" Le drapeau est "+proposition.get(i).getDrapeau());
             System.out.println("------------------------");
         }
         System.out.println("Reponse dans le controlleur " + question.getNom() + " Et le code du pays "+question.getCode() +" et l'URL du pays : "+question.getDrapeau());
         model.addAttribute("appName", appName);
-        //model.addAttribute("Question",question);
+        model.addAttribute("Question",question);
+        model.addAttribute("Proposition",proposition);
+        session.setAttribute("score",Score);
 
         return "index";
     }
+
+    @GetMapping("/Verification")
+    public String Verif(HttpSession session,@RequestParam("Code_bon") String Bonne_reponse,@RequestParam("Code_joueur") String reponse_joueur){
+        if(Bonne_reponse.equals(reponse_joueur)){
+            int new_score = (int) session.getAttribute("Score");
+            new_score++;
+            session.setAttribute("Score",new_score);
+            System.out.println("C'est bon !!");
+            return "index";
+        }else{
+            System.out.println("C'est mauvais");
+            return "index";
+        }
+    }
+
+
 }
