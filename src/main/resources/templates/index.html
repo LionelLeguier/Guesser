@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-
-
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta http-equiv="content-language" content="fr" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title th:text="${appName}">AppName</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizz sur les drapeaux</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-<h1 th:text="${appName}">AppName</h1>
-
-<p>Hello World!</p>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
+    <div class="max-w-md p-8 bg-white rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold mb-4">Bienvenue sur le quizz des drapeaux !</h1>
+        <p class="mb-4">Score actuel : <span th:text="${session.score}" class="font-bold"></span></p>
+        <h2 class="text-xl font-bold mb-2">Question :</h2>
+        <p th:text="${Question.nom}" class="mb-4"></p>
+        <img th:src="${Question.drapeau}" alt="Drapeau du pays" class="mb-4 rounded-lg">
+        <h3 class="text-lg font-bold mb-2">Propositions :</h3>
+        <form action="/Verification" method="get">
+            <input type="hidden" name="Code_bon" th:value="${Question.code}">
+            <ul>
+                <li th:each="pays : ${Proposition}" class="mb-2">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="Code_joueur" th:value="${pays.code}" class="form-radio text-blue-500">
+                        <span th:text="${pays.nom}" class="ml-2"></span>
+                    </label>
+                </li>
+            </ul>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Valider</button>
+        </form>
+    </div>
 </body>
 </html>
