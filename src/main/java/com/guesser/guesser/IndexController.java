@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 
 @Controller
@@ -26,7 +28,7 @@ public class IndexController {
     private int Score = 0;
 
 
-    @GetMapping("/toto")
+    /*@GetMapping("/toto")
     public String home(final Model model, HttpSession session) {
         Pays question = Quizz.Question();
         ArrayList<Pays> proposition = Proposition.Proposition_Drapeau(question.getCode());
@@ -43,6 +45,36 @@ public class IndexController {
         model.addAttribute("Question",question);
         model.addAttribute("Proposition",proposition);
         session.setAttribute("score",Score);
+
+        return "index";
+    }*/
+
+    @GetMapping("/toto")
+    public String homeAsync(final Model model, HttpSession session) throws ExecutionException, InterruptedException {
+
+        CompletableFuture<Pays> questionFuture = CompletableFuture.supplyAsync(Quizz::Question);
+
+        Pays question = questionFuture.get(); // Attendre que la question soit générée
+
+        CompletableFuture<ArrayList<Pays>> propositionFuture = CompletableFuture.supplyAsync(() -> {
+            ArrayList<Pays> proposition = Proposition.Proposition_Drapeau(question.getCode());
+            System.out.println("###########################");
+            for (Pays pays : proposition) {
+                System.out.println("le nom est " + pays.getNom());
+                System.out.println(" Le code est " + pays.getCode());
+                System.out.println(" Le drapeau est " + pays.getDrapeau());
+                System.out.println("------------------------");
+            }
+            System.out.println("Reponse dans le controlleur " + question.getNom() + " Et le code du pays " + question.getCode() + " et l'URL du pays : " + question.getDrapeau());
+            return proposition;
+        });
+
+        ArrayList<Pays> proposition = propositionFuture.get(); // Attendre que les propositions soient générées
+
+        model.addAttribute("appName", appName);
+        model.addAttribute("Question", question);
+        model.addAttribute("Proposition", proposition);
+        session.setAttribute("score", Score);
 
         return "index";
     }

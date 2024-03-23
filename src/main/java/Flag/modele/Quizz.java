@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class Quizz implements Iquizz{
@@ -20,9 +21,12 @@ public class Quizz implements Iquizz{
     String url_drapeau = "https://flagcdn.com/w320/";
     public Pays Question(){
 
+
+
+
         client.get().uri("https://flagcdn.com/fr/codes.json").retrieve().bodyToMono(String.class) // Récupérer le corps de la réponse comme une chaîne de caractères
                 .subscribe(response -> {
-
+                    url_drapeau = "https://flagcdn.com/w320/";
                     Gson gson = new Gson();
                     JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
                     objet_avec_nom = jsonObject;
@@ -33,6 +37,7 @@ public class Quizz implements Iquizz{
 
 
                 });
+
 
 
 
