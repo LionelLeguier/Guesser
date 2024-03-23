@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizz sur les drapeaux</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
     <div class="max-w-md p-8 bg-white rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold mb-4">Bienvenue sur le quizz des drapeaux !</h1>
         <p class="mb-4">Score actuel : <span th:text="${session.score}" class="font-bold"></span></p>
         <h2 class="text-xl font-bold mb-2">Question :</h2>
-        <p th:text="${Question.nom}" class="mb-4"></p>
+
         <img th:src="${Question.drapeau}" alt="Drapeau du pays" class="mb-4 rounded-lg">
         <h3 class="text-lg font-bold mb-2">Propositions :</h3>
         <form action="/Verification" method="get">

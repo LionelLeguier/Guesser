@@ -4,11 +4,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class Quizz implements Iquizz{
@@ -17,15 +19,14 @@ public class Quizz implements Iquizz{
     ArrayList<String> liste_Clef = new ArrayList<String>();
     Random random = new Random();
     int Chiffre_Choix_pays;
+    Pays test;
 
     String url_drapeau = "https://flagcdn.com/w320/";
-    public Pays Question(){
+    public Pays Question()  {
 
 
-
-
-        client.get().uri("https://flagcdn.com/fr/codes.json").retrieve().bodyToMono(String.class) // Récupérer le corps de la réponse comme une chaîne de caractères
-                .subscribe(response -> {
+        Mono<String> bodyMono = client.get().uri("https://flagcdn.com/fr/codes.json").retrieve().bodyToMono(String.class) // Récupérer le corps de la réponse comme une chaîne de caractères
+                .doOnNext(response -> {
                     url_drapeau = "https://flagcdn.com/w320/";
                     Gson gson = new Gson();
                     JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
@@ -38,10 +39,14 @@ public class Quizz implements Iquizz{
 
                 });
 
+        String response = bodyMono.block();
+        if(liste_Clef.size() !=0){
+            test = new Pays(url_drapeau,objet_avec_nom.get(liste_Clef.get(Chiffre_Choix_pays)).toString(), liste_Clef.get(Chiffre_Choix_pays));
+        }else{
+            test = new Pays("https://flagcdn.com/w320/fr.png","France","fr");
+        }
 
-
-
-            return new Pays(url_drapeau,objet_avec_nom.get(liste_Clef.get(Chiffre_Choix_pays)).toString(), liste_Clef.get(Chiffre_Choix_pays));
+        return test;
     }
 
 

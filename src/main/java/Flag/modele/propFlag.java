@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,8 +20,9 @@ public class propFlag implements IpropFlag{
     Random random = new Random();
     @Override
     public ArrayList<Pays> Proposition_Drapeau(String Code_Pays_Question) {
-        client.get().uri("https://flagcdn.com/fr/codes.json").retrieve().bodyToMono(String.class) // Récupérer le corps de la réponse comme une chaîne de caractères
-                .subscribe(response -> {
+
+        Mono<String> bodyMono = client.get().uri("https://flagcdn.com/fr/codes.json").retrieve().bodyToMono(String.class) // Récupérer le corps de la réponse comme une chaîne de caractères
+                .doOnNext(response -> {
                     Liste_proposition.clear();
 
                     Gson gson = new Gson();
@@ -41,6 +43,8 @@ public class propFlag implements IpropFlag{
                     Liste_chiffre_hasard.clear();
 
                 });
+
+        String response = bodyMono.block();
 
         return Liste_proposition;
     }
