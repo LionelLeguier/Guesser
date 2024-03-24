@@ -10,12 +10,12 @@
 <body class="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
     <div class="max-w-md p-8 bg-white rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold mb-4">Bienvenue sur le quizz des drapeaux !</h1>
-        <p class="mb-4">Score actuel : <span th:text="${session.score}" class="font-bold"></span></p>
+        <p class="mb-4">Score actuel : <span th:text="${session.Score}" class="font-bold"></span></p>
         <h2 class="text-xl font-bold mb-2">Question :</h2>
 
         <img th:src="${Question.drapeau}" alt="Drapeau du pays" class="mb-4 rounded-lg">
         <h3 class="text-lg font-bold mb-2">Propositions :</h3>
-        <form action="/Verification" method="get">
+        <form id="verificationForm" action="/Verification" method="get">
             <input type="hidden" name="Code_bon" th:value="${Question.code}">
             <ul>
                 <li th:each="pays : ${Proposition}" class="mb-2">
@@ -27,6 +27,24 @@
             </ul>
             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Valider</button>
         </form>
+        <script>
+            document.getElementById('verificationForm').addEventListener('submit', function(event) {
+                event.preventDefault(); // Empêche la soumission du formulaire
+
+                // Envoie des données du formulaire au serveur
+                fetch('/Verification?' + new URLSearchParams(new FormData(event.target)))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (true) {
+                            // Si le résultat est true, redirige vers la prochaine question
+                            window.location.href = '/toto';
+                        } else {
+                            // Sinon, peut-être afficher un message d'erreur ou ne rien faire
+                        }
+                    })
+                    .catch(error => console.error('Une erreur s\'est produite : ', error));
+            });
+        </script>
     </div>
 </body>
 </html>

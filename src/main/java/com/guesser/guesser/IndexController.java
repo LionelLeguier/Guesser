@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -78,27 +79,31 @@ public class IndexController {
 
         ArrayList<Pays> proposition = propositionFuture.get(); // Attendre que les propositions soient générées
         proposition.add(question);
+        Collections.shuffle(proposition);
 
         model.addAttribute("appName", appName);
         model.addAttribute("Question", question);
         model.addAttribute("Proposition", proposition);
-        session.setAttribute("score", Score);
+        session.setAttribute("Score",Score);
+
 
         return "index";
     }
 
     @GetMapping("/Verification")
-    public String Verif(HttpSession session,@RequestParam("Code_bon") String Bonne_reponse,@RequestParam("Code_joueur") String reponse_joueur){
+    public Boolean Verif(Model model,HttpSession session,@RequestParam("Code_bon") String Bonne_reponse,@RequestParam("Code_joueur") String reponse_joueur){
         if(Bonne_reponse.equals(reponse_joueur)){
 
-            int new_score = (int) session.getAttribute("Score");
-            new_score++;
-            session.setAttribute("Score",new_score);
+            Score = (int) session.getAttribute("Score");
+            Score++;
+            session.setAttribute("Score",Score);
             System.out.println("C'est bon !!");
-            return "index";
+            System.out.println("Score : "+session.getAttribute("Score"));
+            return true;
         }else{
             System.out.println("C'est mauvais");
-            return "index";
+            System.out.println("Score : "+session.getAttribute("Score"));
+            return false;
         }
     }
 
