@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fin du jeu</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
+<div class="max-w-md p-8 bg-white rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold mb-4">Fin du jeu</h1>
+    <p class="text-lg mb-4" th:text="'Score : ' + ${score}"></p>
+    <p class="text-lg font-bold mb-4" th:text="${message}"></p>
+</div>
+</body>
+</html>

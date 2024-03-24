@@ -59,8 +59,8 @@ public class IndexController {
             return Quizz.Question();
 
         });
-        //String difficulte = (String) session.getAttribute("difficulte");
-        /*if ("facile".equals(difficulte)) {
+        /*String difficulte = (String) session.getAttribute("difficulte");
+        if ("facile".equals(difficulte)) {
             // Pour le mode facile, afficher deux propositions et donner 30 secondes
             proposition = Proposition.Proposition_Drapeau(question.getCode(), 2);
             session.setAttribute("tempsRestant", 30); // Durée en secondes
@@ -71,6 +71,16 @@ public class IndexController {
         } else if ("difficile".equals(difficulte)) {
             // Pour le mode difficile, aucune proposition et donner 10 secondes
             session.setAttribute("tempsRestant", 10); // Durée en secondes
+        }
+        //Vérification du nombre de questions posées
+        Integer nombreQuestions = (Integer) session.getAttribute("nombreQuestions");
+        if (nombreQuestions == null) {
+            nombreQuestions = 0;
+        }
+
+        if (nombreQuestions >= 10) {
+            // Redirection vers la page de fin de jeu
+            return "finJeu";
         }
          */
         System.out.println("arriver au patientage");
@@ -120,6 +130,35 @@ public class IndexController {
             return false;
         }
     }
+    /*@GetMapping("/finJeu")
+    public String finJeu(HttpSession session, Model model) {
+        // Calcul du score final
+        Integer scoreFinal = (Integer) session.getAttribute("score");
+        String messageEvaluation;
+
+        if (scoreFinal == 10) {
+            messageEvaluation = "C'est parfait!";
+        }
+         else if (scoreFinal >= 8) {
+            messageEvaluation = "C'est presque parfait!";
+        } else if (scoreFinal >= 4) {
+            messageEvaluation = "Vous pouvez mieux faire!";
+        } else if (scoreFinal >= 0) {
+            messageEvaluation = "Vous êtes nul!";
+        } else {
+            messageEvaluation = "Score invalide!";
+        }
+
+        // Passage des données à la vue
+        model.addAttribute("scoreFinal", scoreFinal);
+        model.addAttribute("messageEvaluation", messageEvaluation);
+
+        // Effacer les données de session
+        session.removeAttribute("score");
+        session.removeAttribute("nombreQuestions");
+
+        return "finJeu";
+    }*/
 
 
 }
