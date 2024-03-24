@@ -59,6 +59,20 @@ public class IndexController {
             return Quizz.Question();
 
         });
+        //String difficulte = (String) session.getAttribute("difficulte");
+        /*if ("facile".equals(difficulte)) {
+            // Pour le mode facile, afficher deux propositions et donner 30 secondes
+            proposition = Proposition.Proposition_Drapeau(question.getCode(), 2);
+            session.setAttribute("tempsRestant", 30); // Durée en secondes
+        } else if ("moyen".equals(difficulte)) {
+            // Pour le mode moyen, afficher quatre propositions et donner 15 secondes
+            proposition = Proposition.Proposition_Drapeau(question.getCode(), 4);
+            session.setAttribute("tempsRestant", 15); // Durée en secondes
+        } else if ("difficile".equals(difficulte)) {
+            // Pour le mode difficile, aucune proposition et donner 10 secondes
+            session.setAttribute("tempsRestant", 10); // Durée en secondes
+        }
+         */
         System.out.println("arriver au patientage");
         Pays question = questionFuture.get(); // Attendre que la question soit générée
 
