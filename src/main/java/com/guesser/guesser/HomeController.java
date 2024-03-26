@@ -20,6 +20,6 @@ public class HomeController {
         // Enregistrer la difficulté choisie dans la session
         session.setAttribute("difficulte", difficulte);
         // Rediriger vers la page de jeu
-        return "redirect:/toto";
+        return "redirect:/jeu";
     }
 }

@@ -29,7 +29,7 @@ public class IndexController {
     private int Score = 0;
 
 
-    /*@GetMapping("/toto")
+    /*@GetMapping("/jeu")
     public String home(final Model model, HttpSession session) {
         Pays question = Quizz.Question();
         ArrayList<Pays> proposition = Proposition.Proposition_Drapeau(question.getCode());
@@ -50,7 +50,7 @@ public class IndexController {
         return "index";
     }*/
 
-    @GetMapping("/toto")
+    @GetMapping("/jeu")
     public String home(final Model model, HttpSession session) throws ExecutionException, InterruptedException {
         //System.out.println("Avant tout");
         CompletableFuture<Pays> questionFuture = CompletableFuture.supplyAsync(() -> {

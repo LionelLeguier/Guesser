@@ -31,7 +31,7 @@ public class propFlag implements IpropFlag{
                     Liste_avec_Clef.addAll(liste_Clef);
                     while(Liste_chiffre_hasard.size() < 3){
                         int nouveau_chiffre = random.nextInt(Liste_avec_Clef.size());
-                        if (!Liste_chiffre_hasard.contains(nouveau_chiffre) || !(jsonObject.get(Liste_avec_Clef.get(nouveau_chiffre)).toString().equals(Code_Pays_Question))){
+                        if (!Liste_chiffre_hasard.contains(nouveau_chiffre) && !(jsonObject.get(Liste_avec_Clef.get(nouveau_chiffre)).toString().equals(Code_Pays_Question))){
                             Liste_chiffre_hasard.add(nouveau_chiffre);
                         }
                     }
