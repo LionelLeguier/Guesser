@@ -26,7 +26,8 @@ public class IndexController {
     private Iquizz Quizz;
     @Autowired
     private IpropFlag Proposition;
-    private int Score = 0;
+    private int compteur = 0;
+
 
 
     /*@GetMapping("/jeu")
@@ -67,13 +68,26 @@ public class IndexController {
 
         if (difficulte.equals("facile")) {
             Nb_props= 1;
+            if(compteur == 0){
+                session.setAttribute("Score",0);
+                compteur++;
+            }
+
             session.setAttribute("tempsRestant", 30); // Durée en secondes
         } else if (difficulte.equals("moyen")) {
             // Pour le mode moyen, afficher quatre propositions et donner 15 secondes
             Nb_props= 3;
+            if(compteur == 0){
+                session.setAttribute("Score",0);
+                compteur++;
+            }
             session.setAttribute("tempsRestant", 15); // Durée en secondes
         } else if (difficulte.equals("difficile")) {
             Nb_props= 0;
+            if(compteur == 0){
+                session.setAttribute("Score",0);
+                compteur++;
+            }
             session.setAttribute("tempsRestant", 10); // Durée en secondes
         } else {
             Nb_props = 0;
@@ -118,28 +132,30 @@ public class IndexController {
         model.addAttribute("Question", question);
         model.addAttribute("Proposition", proposition);
         model.addAttribute("Difficulte",difficulte);
-        session.setAttribute("Score",Score);
+
 
 
         return "index";
     }
 
-    @GetMapping("/Verification")
-    public Boolean Verif(Model model,HttpSession session,@RequestParam("Code_bon") String Bonne_reponse,@RequestParam("Code_joueur") String reponse_joueur){
+    /*@GetMapping("/Verification")
+    public String Verif(Model model,HttpSession session,@RequestParam("Code_bon") String Bonne_reponse,@RequestParam("Code_joueur") String reponse_joueur){
         if(Bonne_reponse.equals(reponse_joueur)){
-
+            boolean bool=true;
             Score = (int) session.getAttribute("Score");
             Score++;
             session.setAttribute("Score",Score);
             System.out.println("C'est bon !!");
             System.out.println("Score : "+session.getAttribute("Score"));
-            return true;
+            return "index";
         }else{
+            boolean bool=false;
+
             System.out.println("C'est mauvais");
             System.out.println("Score : "+session.getAttribute("Score"));
-            return false;
+            return "index";
         }
-    }
+    }*/
     /*@GetMapping("/finJeu")
     public String finJeu(HttpSession session, Model model) {
         // Calcul du score final

@@ -16,7 +16,7 @@
         <img th:src="${Question.drapeau}" alt="Drapeau du pays" class="mb-4 rounded-lg">
         <h3 class="text-lg font-bold mb-2">Propositions :</h3>
         <form id="verificationForm" action="/Verification" method="get">
-            <input type="hidden" name="Code_bon" th:value="${Question.code}">
+            <input type="hidden" name="Code_bon" th:value="${Question.getNom()}">
             <ul th:if="${Difficulte != 'difficile'}">
                 <li th:each="pays : ${Proposition}" class="mb-2">
                     <label class="inline-flex items-center">
@@ -37,7 +37,7 @@
 
 
                 // Envoie des données du formulaire au serveur
-                fetch('/Verification?' + new URLSearchParams(new FormData(event.target)))
+                fetch("/Verification?" + new URLSearchParams(new FormData(event.target))+"&difficulte=[[${Difficulte}]]")
                     .then(response => response.json())
                     .then(data => {
                         if (true) {

@@ -41,7 +41,7 @@ public class Quizz implements Iquizz{
 
         String response = bodyMono.block();
         if(liste_Clef.size() !=0){
-            test = new Pays(url_drapeau,objet_avec_nom.get(liste_Clef.get(Chiffre_Choix_pays)).toString(), liste_Clef.get(Chiffre_Choix_pays));
+            test = new Pays(url_drapeau,objet_avec_nom.get(liste_Clef.get(Chiffre_Choix_pays)).toString().replace("\"",""), liste_Clef.get(Chiffre_Choix_pays));
         }else{
             test = new Pays("https://flagcdn.com/w320/fr.png","France","fr");
         }

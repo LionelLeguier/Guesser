@@ -38,7 +38,7 @@ public class propFlag implements IpropFlag{
                     for(int i=0;i<Liste_chiffre_hasard.size();i++){
                         url_drapeau = "https://flagcdn.com/w320/";
                         url_drapeau += Liste_avec_Clef.get(Liste_chiffre_hasard.get(i))+".png";
-                        Liste_proposition.add(new Pays(url_drapeau,jsonObject.get(Liste_avec_Clef.get(Liste_chiffre_hasard.get(i))).toString(),Liste_avec_Clef.get(i)));
+                        Liste_proposition.add(new Pays(url_drapeau,jsonObject.get(Liste_avec_Clef.get(Liste_chiffre_hasard.get(i))).toString().replace("\"",""),Liste_avec_Clef.get(i)));
                     }
                     Liste_chiffre_hasard.clear();
 
