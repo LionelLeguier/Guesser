@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String home() {
+    public String home(HttpSession session) {
+        if(session.getAttribute("Score") != null){
+            session.setAttribute("Score",0);
+        }
+
         return "accueil"; // Renvoie la page de choix de la difficulté
     }
 

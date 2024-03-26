@@ -20,7 +20,7 @@
             <ul th:if="${Difficulte != 'difficile'}">
                 <li th:each="pays : ${Proposition}" class="mb-2">
                     <label class="inline-flex items-center">
-                        <input type="radio" name="Code_joueur" th:value="${pays.code}" class="form-radio text-blue-500">
+                        <input type="radio" name="Code_joueur" th:value="${pays.getNom()}" class="form-radio text-blue-500">
                         <span th:text="${pays.nom}" class="ml-2"></span>
                     </label>
                 </li>
