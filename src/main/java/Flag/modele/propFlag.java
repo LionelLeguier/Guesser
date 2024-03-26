@@ -19,7 +19,7 @@ public class propFlag implements IpropFlag{
     String url_drapeau = "https://flagcdn.com/w320/";
     Random random = new Random();
     @Override
-    public ArrayList<Pays> Proposition_Drapeau(String Code_Pays_Question) {
+    public ArrayList<Pays> Proposition_Drapeau(String Code_Pays_Question,int Nb_prop) {
 
         Mono<String> bodyMono = client.get().uri("https://flagcdn.com/fr/codes.json").retrieve().bodyToMono(String.class) // Récupérer le corps de la réponse comme une chaîne de caractères
                 .doOnNext(response -> {
@@ -29,7 +29,7 @@ public class propFlag implements IpropFlag{
                     JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
                     Set<String> liste_Clef =  jsonObject.keySet();
                     Liste_avec_Clef.addAll(liste_Clef);
-                    while(Liste_chiffre_hasard.size() < 3){
+                    while(Liste_chiffre_hasard.size() < Nb_prop){
                         int nouveau_chiffre = random.nextInt(Liste_avec_Clef.size());
                         if (!Liste_chiffre_hasard.contains(nouveau_chiffre) && !(jsonObject.get(Liste_avec_Clef.get(nouveau_chiffre)).toString().equals(Code_Pays_Question))){
                             Liste_chiffre_hasard.add(nouveau_chiffre);

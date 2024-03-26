@@ -12,7 +12,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "difficulte"; // Renvoie la page de choix de la difficulté
+        return "accueil"; // Renvoie la page de choix de la difficulté
     }
 
     @PostMapping("/start-game")

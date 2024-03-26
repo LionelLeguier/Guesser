@@ -17,7 +17,7 @@
         <h3 class="text-lg font-bold mb-2">Propositions :</h3>
         <form id="verificationForm" action="/Verification" method="get">
             <input type="hidden" name="Code_bon" th:value="${Question.code}">
-            <ul>
+            <ul th:if="${Difficulte != 'difficile'}">
                 <li th:each="pays : ${Proposition}" class="mb-2">
                     <label class="inline-flex items-center">
                         <input type="radio" name="Code_joueur" th:value="${pays.code}" class="form-radio text-blue-500">
@@ -25,19 +25,24 @@
                     </label>
                 </li>
             </ul>
+            <div th:if="${Difficulte == 'difficile'}">
+                <label for="reponse" class="block mb-2">Entrez votre réponse :</label>
+                <input type="text" id="reponse" name="Code_joueur" class="form-input w-full mb-2" placeholder="Votre réponse...">
+            </div>
             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Valider</button>
         </form>
         <script>
             document.getElementById('verificationForm').addEventListener('submit', function(event) {
                 event.preventDefault(); // Empêche la soumission du formulaire
 
+
                 // Envoie des données du formulaire au serveur
                 fetch('/Verification?' + new URLSearchParams(new FormData(event.target)))
                     .then(response => response.json())
                     .then(data => {
                         if (true) {
-                            // Si le résultat est true, redirige vers la prochaine question
-                            window.location.href = '/jeu';
+
+                            window.location.href = "/jeu?difficulte=[[${Difficulte}]]";
                         } else {
                             // Sinon, peut-être afficher un message d'erreur ou ne rien faire
                         }

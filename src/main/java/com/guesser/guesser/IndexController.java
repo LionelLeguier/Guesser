@@ -51,7 +51,7 @@ public class IndexController {
     }*/
 
     @GetMapping("/jeu")
-    public String home(final Model model, HttpSession session) throws ExecutionException, InterruptedException {
+    public String home(final Model model, HttpSession session,@RequestParam("difficulte")String difficulte) throws ExecutionException, InterruptedException {
         //System.out.println("Avant tout");
         CompletableFuture<Pays> questionFuture = CompletableFuture.supplyAsync(() -> {
             //System.out.println("dans la promesse");
@@ -59,18 +59,24 @@ public class IndexController {
             return Quizz.Question();
 
         });
-        /*String difficulte = (String) session.getAttribute("difficulte");
-        if ("facile".equals(difficulte)) {
-            // Pour le mode facile, afficher deux propositions et donner 30 secondes
-            proposition = Proposition.Proposition_Drapeau(question.getCode(), 2);
+
+        int Nb_props;
+        System.out.println("arriver au patientage");
+        Pays question = questionFuture.get(); // Attendre que la question soit générée
+
+
+        if (difficulte.equals("facile")) {
+            Nb_props= 1;
             session.setAttribute("tempsRestant", 30); // Durée en secondes
-        } else if ("moyen".equals(difficulte)) {
+        } else if (difficulte.equals("moyen")) {
             // Pour le mode moyen, afficher quatre propositions et donner 15 secondes
-            proposition = Proposition.Proposition_Drapeau(question.getCode(), 4);
+            Nb_props= 3;
             session.setAttribute("tempsRestant", 15); // Durée en secondes
-        } else if ("difficile".equals(difficulte)) {
-            // Pour le mode difficile, aucune proposition et donner 10 secondes
+        } else if (difficulte.equals("difficile")) {
+            Nb_props= 0;
             session.setAttribute("tempsRestant", 10); // Durée en secondes
+        } else {
+            Nb_props = 0;
         }
         //Vérification du nombre de questions posées
         Integer nombreQuestions = (Integer) session.getAttribute("nombreQuestions");
@@ -82,14 +88,14 @@ public class IndexController {
             // Redirection vers la page de fin de jeu
             return "finJeu";
         }
-         */
-        System.out.println("arriver au patientage");
-        Pays question = questionFuture.get(); // Attendre que la question soit générée
+
+
+
 
         System.out.println("TEst async  "+question.getNom());
 
         CompletableFuture<ArrayList<Pays>> propositionFuture = CompletableFuture.supplyAsync(() -> {
-            ArrayList<Pays> proposition = Proposition.Proposition_Drapeau(question.getCode());
+            ArrayList<Pays> proposition = Proposition.Proposition_Drapeau(question.getCode(),Nb_props);
             System.out.println("###########################");
             for (Pays pays : proposition) {
                 System.out.println("le nom est " + pays.getNom());
@@ -105,9 +111,13 @@ public class IndexController {
         proposition.add(question);
         Collections.shuffle(proposition);
 
+
+
+
         model.addAttribute("appName", appName);
         model.addAttribute("Question", question);
         model.addAttribute("Proposition", proposition);
+        model.addAttribute("Difficulte",difficulte);
         session.setAttribute("Score",Score);
 
 
