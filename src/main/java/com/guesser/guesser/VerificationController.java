@@ -24,12 +24,18 @@ public class VerificationController {
             Bonne_reponse= removeAccent(Bonne_reponse);
             if(Bonne_reponse.equalsIgnoreCase(reponse_joueur)) {
                 int Score = (int) session.getAttribute("Score");
+                int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
+                NB_QUESTION++;
                 Score++;
+                session.setAttribute("Nombre_Question",NB_QUESTION);
                 session.setAttribute("Score", Score);
                 System.out.println("C'est bon !!");
                 System.out.println("Score : " + session.getAttribute("Score"));
                 return true;
             }else{
+                int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
+                NB_QUESTION++;
+                session.setAttribute("Nombre_Question",NB_QUESTION);
                 System.out.println("C'est mauvais");
                 System.out.println("Score : "+session.getAttribute("Score"));
                 return false;
@@ -37,12 +43,18 @@ public class VerificationController {
         }
         else if(Bonne_reponse.equals(reponse_joueur)){
             int Score = (int) session.getAttribute("Score");
+            int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
+            NB_QUESTION++;
             Score++;
+            session.setAttribute("Nombre_Question",NB_QUESTION);
             session.setAttribute("Score",Score);
             System.out.println("C'est bon !!");
             System.out.println("Score : "+session.getAttribute("Score"));
             return true;
         }else{
+            int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
+            NB_QUESTION++;
+            session.setAttribute("Nombre_Question",NB_QUESTION);
             System.out.println("C'est mauvais");
             System.out.println("Score : "+session.getAttribute("Score"));
             return false;

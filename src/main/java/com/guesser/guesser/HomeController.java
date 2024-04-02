@@ -12,6 +12,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(HttpSession session) {
+        session.setAttribute("Nombre_Question",0);
         if(session.getAttribute("Score") != null){
             session.setAttribute("Score",0);
         }
@@ -23,6 +24,7 @@ public class HomeController {
     public String startGame(@RequestParam("difficulte") String difficulte, HttpSession session) {
         // Enregistrer la difficulté choisie dans la session
         session.setAttribute("difficulte", difficulte);
+        session.setAttribute("Nombre_Question",0);
         // Rediriger vers la page de jeu
         return "redirect:/jeu";
     }

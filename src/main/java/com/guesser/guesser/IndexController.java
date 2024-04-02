@@ -54,6 +54,12 @@ public class IndexController {
     @GetMapping("/jeu")
     public String home(final Model model, HttpSession session,@RequestParam("difficulte")String difficulte) throws ExecutionException, InterruptedException {
         //System.out.println("Avant tout");
+        System.out.println("iciciiciciic"+session.getAttribute("Nombre_Question"));
+        if((session.getAttribute("Nombre_Question") != null) && ((int) session.getAttribute("Nombre_Question") >= 5)){
+
+                return "findejeu";
+        }
+
         CompletableFuture<Pays> questionFuture = CompletableFuture.supplyAsync(() -> {
             //System.out.println("dans la promesse");
 

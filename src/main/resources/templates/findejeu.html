@@ -9,7 +9,7 @@
 <body class="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
 <div class="max-w-md p-8 bg-white rounded-lg shadow-lg">
     <h1 class="text-3xl font-bold mb-4">Fin du jeu</h1>
-    <p class="text-lg mb-4" th:text="'Score : ' + ${score}"></p>
+    <p class="text-lg mb-4" th:text="'Score : ' + ${session.Score}"></p>
     <p class="text-lg font-bold mb-4" th:text="${message}"></p>
 </div>
 </body>
