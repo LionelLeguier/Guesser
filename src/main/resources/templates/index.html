@@ -40,11 +40,13 @@
                 fetch("/Verification?" + new URLSearchParams(new FormData(event.target))+"&difficulte=[[${Difficulte}]]")
                     .then(response => response.json())
                     .then(data => {
-                        if (true) {
-
+                        console.log(data)
+                        if (data) {
+                            alert("Bonne Réponse !");
                             window.location.href = "/jeu?difficulte=[[${Difficulte}]]";
                         } else {
-                            // Sinon, peut-être afficher un message d'erreur ou ne rien faire
+                            alert("Mauvaise Réponse c'etait [[${Question.getNom()}]] crétin");
+                            window.location.href = "/jeu?difficulte=[[${Difficulte}]]"
                         }
                     })
                     .catch(error => console.error('Une erreur s\'est produite : ', error));
