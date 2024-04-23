@@ -55,8 +55,31 @@ public class IndexController {
     public String home(final Model model, HttpSession session,@RequestParam("difficulte")String difficulte) throws ExecutionException, InterruptedException {
         //System.out.println("Avant tout");
         System.out.println("iciciiciciic"+session.getAttribute("Nombre_Question"));
+        String messageEvaluation  = (String) session.getAttribute("MessageFin");
         if((session.getAttribute("Nombre_Question") != null) && ((int) session.getAttribute("Nombre_Question") >= 5)){
+            int Score = (int) session.getAttribute("Score");
 
+            if (Score == 5) {
+                messageEvaluation = "C'est parfait !";
+                session.setAttribute("MessageFin",messageEvaluation);
+            }
+            else if (Score == 3) {
+                messageEvaluation = "C'est presque parfait !";
+                session.setAttribute("MessageFin",messageEvaluation);
+
+            } else if (Score == 2) {
+                messageEvaluation = "Vous pouvez mieux faire !";
+                session.setAttribute("MessageFin",messageEvaluation);
+
+            } else if (Score >= 0) {
+                messageEvaluation = "Vous êtes nul !";
+                session.setAttribute("MessageFin",messageEvaluation);
+
+            } else {
+                messageEvaluation = "Score invalide !";
+                session.setAttribute("MessageFin",messageEvaluation);
+
+            }
                 return "findejeu";
         }
 
@@ -104,10 +127,10 @@ public class IndexController {
             nombreQuestions = 0;
         }
 
-        if (nombreQuestions >= 10) {
+        /*if (nombreQuestions >= 10) {
             // Redirection vers la page de fin de jeu
             return "finJeu";
-        }
+        }*/
 
 
 
