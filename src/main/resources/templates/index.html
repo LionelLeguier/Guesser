@@ -5,51 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizz sur les drapeaux</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col justify-center items-center">
-    <div class="max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold mb-4">Bienvenue sur le quizz des drapeaux !</h1>
-        <p class="mb-4">Score actuel : <span th:text="${session.Score}" class="font-bold"></span></p>
-        <h2 class="text-xl font-bold mb-2">Question :</h2>
+<div class="max-w-md p-8 bg-white rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold mb-4">Bienvenue sur le quizz des drapeaux !</h1>
+    <p class="mb-4">Score actuel : <span th:text="${session.Score}" class="font-bold"></span></p>
+    <h2 class="text-xl font-bold mb-2">Question :</h2>
 
-        <img th:src="${Question.drapeau}" alt="Drapeau du pays" class="mb-4 rounded-lg">
-        <h3 class="text-lg font-bold mb-2">Propositions :</h3>
-        <form id="verificationForm" action="/Verification" method="get">
-            <input type="hidden" name="Code_bon" th:value="${Question.getNom()}">
-            <ul th:if="${Difficulte != 'difficile'}">
-                <li th:each="pays : ${Proposition}" class="mb-2">
-                    <label class="inline-flex items-center">
-                        <input type="radio" name="Code_joueur" th:value="${pays.getNom()}" class="form-radio text-blue-500">
-                        <span th:text="${pays.nom}" class="ml-2"></span>
-                    </label>
-                </li>
-            </ul>
-            <div th:if="${Difficulte == 'difficile'}">
-                <label for="reponse" class="block mb-2">Entrez votre réponse :</label>
-                <input type="text" id="reponse" name="Code_joueur" class="form-input w-full mb-2" placeholder="Votre réponse...">
-            </div>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Valider</button>
-        </form>
-        <script>
-            document.getElementById('verificationForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // Empêche la soumission du formulaire
+    <img th:src="${Question.drapeau}" alt="Drapeau du pays" class="mb-4 rounded-lg">
+    <h3 class="text-lg font-bold mb-2">Propositions :</h3>
+    <form id="verificationForm" action="/Verification" method="get">
+        <input type="hidden" name="Code_bon" th:value="${Question.getNom()}">
+        <ul th:if="${Difficulte != 'difficile'}">
+            <li th:each="pays : ${Proposition}" class="mb-2">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="Code_joueur" th:value="${pays.getNom()}" class="form-radio text-blue-500">
+                    <span th:text="${pays.nom}" class="ml-2"></span>
+                </label>
+            </li>
+        </ul>
+        <div th:if="${Difficulte == 'difficile'}">
+            <label for="reponse" class="block mb-2">Entrez votre réponse :</label>
+            <input type="text" id="reponse" name="Code_joueur" class="form-input w-full mb-2" placeholder="Votre réponse...">
+        </div>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Valider</button>
+    </form>
+    <script>
+        document.getElementById('verificationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêche la soumission du formulaire
+
+            // Envoie des données du formulaire au serveur
+            fetch("/Verification?" + new URLSearchParams(new FormData(event.target))+"&difficulte=[[${Difficulte}]]")
+                .then(response => response.json())
+                .then(isCorrect => {
+                    var questionNom = "[[${Question.getNom()}]]";
 
 
-                // Envoie des données du formulaire au serveur
-                fetch("/Verification?" + new URLSearchParams(new FormData(event.target))+"&difficulte=[[${Difficulte}]]")
-                    .then(response => response.json())
-                    .then(data => {
-                        if (true) {
 
-                            window.location.href = "/jeu?difficulte=[[${Difficulte}]]";
-                        } else {
-                            // Sinon, peut-être afficher un message d'erreur ou ne rien faire
-                        }
-                    })
-                    .catch(error => console.error('Une erreur s\'est produite : ', error));
-            });
-        </script>
-    </div>
+                    if (isCorrect) {
+                        alert("Bonne réponse: " + questionNom);
+                        window.location.href = "/jeu?difficulte=[[${Difficulte}]]";
+                    } else {
+                        alert("Mauvaise réponse: " + questionNom);
+                    }
+                })
+                .catch(error => console.error('Une erreur s\'est produite : ', error));
+        });
+
+    </script>
+</div>
 </body>
 </html>

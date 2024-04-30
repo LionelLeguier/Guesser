@@ -19,7 +19,7 @@ public class VerificationController {
     @GetMapping("/Verification")
     public Boolean Verif(Model model, HttpSession session,@RequestParam("difficulte")String difficulte, @RequestParam("Code_bon") String Bonne_reponse, @RequestParam("Code_joueur") String reponse_joueur){
 
-
+        boolean isCorrect;
         if (difficulte.equals("difficile")){
             Bonne_reponse= removeAccent(Bonne_reponse);
             if(Bonne_reponse.equalsIgnoreCase(reponse_joueur)) {
@@ -50,14 +50,16 @@ public class VerificationController {
             session.setAttribute("Score",Score);
             System.out.println("C'est bon !!");
             System.out.println("Score : "+session.getAttribute("Score"));
-            return true;
+            isCorrect=true;
+            return isCorrect;
         }else{
             int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
             NB_QUESTION++;
             session.setAttribute("Nombre_Question",NB_QUESTION);
             System.out.println("C'est mauvais");
             System.out.println("Score : "+session.getAttribute("Score"));
-            return false;
+            isCorrect=false;
+            return isCorrect;
         }
     }
 }
