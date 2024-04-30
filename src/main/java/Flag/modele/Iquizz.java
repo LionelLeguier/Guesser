@@ -7,4 +7,5 @@ import java.util.concurrent.ExecutionException;
 
 public interface Iquizz {
     public Pays Question() ;
+    public String ScoreToString(int score);
 }

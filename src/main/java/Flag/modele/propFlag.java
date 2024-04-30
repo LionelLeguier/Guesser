@@ -29,6 +29,7 @@ public class propFlag implements IpropFlag{
                     JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
                     Set<String> liste_Clef =  jsonObject.keySet();
                     Liste_avec_Clef.addAll(liste_Clef);
+                    System.out.println("Ma taille de liste est :"+Liste_avec_Clef.size());
                     while(Liste_chiffre_hasard.size() < Nb_prop){
                         int nouveau_chiffre = random.nextInt(Liste_avec_Clef.size());
                         if (!Liste_chiffre_hasard.contains(nouveau_chiffre) && !(jsonObject.get(Liste_avec_Clef.get(nouveau_chiffre)).toString().equals(Code_Pays_Question))){

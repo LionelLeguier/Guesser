@@ -1,5 +1,6 @@
 package Flag.modele;
 
+import jakarta.websocket.Session;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import com.google.gson.Gson;
@@ -20,6 +21,33 @@ public class Quizz implements Iquizz{
     Random random = new Random();
     int Chiffre_Choix_pays;
     Pays test;
+
+    public String ScoreToString(int Score){
+
+        String messageEvaluation;
+        if (Score == 5) {
+            messageEvaluation = "C'est parfait !";
+        }
+        else if (Score == 3) {
+            messageEvaluation = "C'est presque parfait !";
+
+
+        } else if (Score == 2) {
+            messageEvaluation = "Vous pouvez mieux faire !";
+
+
+        } else if (Score >= 0) {
+            messageEvaluation = "Vous êtes nul !";
+
+
+        } else {
+            messageEvaluation = "Score invalide !";
+        }
+        return messageEvaluation;
+    }
+
+
+
 
     String url_drapeau = "https://flagcdn.com/w320/";
     public Pays Question()  {

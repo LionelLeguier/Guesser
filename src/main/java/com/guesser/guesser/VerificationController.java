@@ -29,15 +29,13 @@ public class VerificationController {
                 Score++;
                 session.setAttribute("Nombre_Question",NB_QUESTION);
                 session.setAttribute("Score", Score);
-                System.out.println("C'est bon !!");
-                System.out.println("Score : " + session.getAttribute("Score"));
+
                 return true;
             }else{
                 int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
                 NB_QUESTION++;
                 session.setAttribute("Nombre_Question",NB_QUESTION);
-                System.out.println("C'est mauvais");
-                System.out.println("Score : "+session.getAttribute("Score"));
+
                 return false;
             }
         }
@@ -48,16 +46,12 @@ public class VerificationController {
             Score++;
             session.setAttribute("Nombre_Question",NB_QUESTION);
             session.setAttribute("Score",Score);
-            System.out.println("C'est bon !!");
-            System.out.println("Score : "+session.getAttribute("Score"));
             isCorrect=true;
             return isCorrect;
         }else{
             int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
             NB_QUESTION++;
             session.setAttribute("Nombre_Question",NB_QUESTION);
-            System.out.println("C'est mauvais");
-            System.out.println("Score : "+session.getAttribute("Score"));
             isCorrect=false;
             return isCorrect;
         }
