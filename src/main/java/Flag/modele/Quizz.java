@@ -19,7 +19,7 @@ public class Quizz implements Iquizz{
     ArrayList<String> liste_Clef = new ArrayList<String>();
     Random random = new Random();
     int Chiffre_Choix_pays;
-    Pays pays;
+    Pays test;
 
     String url_drapeau = "https://flagcdn.com/w320/";
     public Pays Question()  {
@@ -40,13 +40,11 @@ public class Quizz implements Iquizz{
                 });
 
         String response = bodyMono.block();
-        if(liste_Clef.size() !=0){
-            pays = new Pays(url_drapeau,objet_avec_nom.get(liste_Clef.get(Chiffre_Choix_pays)).toString().replace("\"",""), liste_Clef.get(Chiffre_Choix_pays));
-        }else{
-            pays = new Pays("https://flagcdn.com/w320/fr.png","France","fr");
-        }
 
-        return pays;
+        Pays pays_bonne_reponse = new Pays(url_drapeau,objet_avec_nom.get(liste_Clef.get(Chiffre_Choix_pays)).toString().replace("\"",""), liste_Clef.get(Chiffre_Choix_pays));
+
+
+        return pays_bonne_reponse;
     }
 
 

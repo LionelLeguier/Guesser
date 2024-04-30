@@ -12,7 +12,7 @@ Après avoir répondu aux 10 questions, la partie est finie et notre score est a
 Il y a trois de mode de difficultés : 
 
 - Mode facile 2 propositions de pays et 30 secondes pour répondre
-- Mode normal moyen avec 4 propositions de pays et 15 secondes pour répondre
+- Mode moyen avec 4 propositions de pays et 15 secondes pour répondre
 - Mode dur sans aucune proposition où le joueur doit écrire le pays auquel il pense et 10 secondes pour répondre.
 
 ## Story: 
