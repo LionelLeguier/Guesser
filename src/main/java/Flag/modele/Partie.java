@@ -28,10 +28,15 @@ public class Partie implements Ipartie {
 
     public Resultat Verification(String BonneReponse,String ReponseJoueur,int score, int nb_question){
         if(BonneReponse.equalsIgnoreCase(ReponseJoueur)){
+            System.out.println("je passe dans la bonne reponse");
             score ++;
             nb_question++;
             return new Resultat(score,nb_question,true);
+        }else {
+            System.out.println("Le scoire de question est de "+nb_question);
+            nb_question++;
+            return new Resultat(score,nb_question,false);
         }
-        return new Resultat(score,nb_question,false);
+
     }
 }

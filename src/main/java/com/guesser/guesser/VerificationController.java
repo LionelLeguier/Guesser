@@ -29,18 +29,20 @@ public class VerificationController {
 
     @GetMapping("/Verification")
     public Boolean Verif(Model model, HttpSession session,@RequestParam("difficulte")String difficulte, @RequestParam("Code_bon") String Bonne_reponse, @RequestParam("Code_joueur") String reponse_joueur){
-
         boolean isCorrect;
         Bonne_reponse= removeAccent(Bonne_reponse);
         reponse_joueur = removeAccent(reponse_joueur);
         int Score = (int) session.getAttribute("Score");
         int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
-
+        System.out.println("La bonne rep est "+Bonne_reponse);
+        System.out.println("rep joueur"+reponse_joueur);
+        System.out.println("Score" +Score);
+        System.out.println("nb question "+NB_QUESTION);
         Resultat verification = Partie.Verification(Bonne_reponse,reponse_joueur,Score,NB_QUESTION);
 
 
         session.setAttribute("Nombre_Question",verification.nb_questions);
-        session.setAttribute("Score", verification.nb_questions);
+        session.setAttribute("Score", verification.score);
         return verification.estCorrect;
 
     }
