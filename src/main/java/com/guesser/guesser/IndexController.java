@@ -1,9 +1,6 @@
 package com.guesser.guesser;
 
-import Flag.modele.IpropFlag;
-import Flag.modele.Iquizz;
-import Flag.modele.Pays;
-import Flag.modele.Quizz;
+import Flag.modele.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +24,10 @@ public class IndexController {
     private Iquizz Quizz;
     @Autowired
     private IpropFlag Proposition;
+    @Autowired
+    private Ipartie Partie;
     private int compteur = 0;
+private ArrayList<String> liste_pays_deja_sortie = new ArrayList<String>();
 
 
 
@@ -35,12 +35,16 @@ public class IndexController {
 
     @GetMapping("/jeu")
     public String home(final Model model, HttpSession session,@RequestParam("difficulte")String difficulte) throws ExecutionException, InterruptedException {
-
-        if((session.getAttribute("Nombre_Question") != null) && ((int) session.getAttribute("Nombre_Question") >= 5)){
+        if((session.getAttribute("Nombre_Question") != null) && Partie.FinDePartie((int) session.getAttribute("Nombre_Question"))){
             String messageEvaluation= Quizz.ScoreToString((int)session.getAttribute("Score"));
             session.setAttribute("MessageFin",messageEvaluation);
-                return "findejeu";
+            return "findejeu";
         }
+        if(session.getAttribute("liste_pays_sortie") != null){
+            liste_pays_deja_sortie = (ArrayList<String>) session.getAttribute("liste_pays_sortie");
+        }
+
+
         CompletableFuture<Pays> questionFuture = CompletableFuture.supplyAsync(() -> {
 
             return Quizz.Question();
@@ -50,34 +54,20 @@ public class IndexController {
         int Nb_props;
 
         Pays question = questionFuture.get(); // Attendre que la question soit générée
-
-
-        if (difficulte.equals("facile")) {
-            Nb_props= 1;
-            if(compteur == 0){
-                session.setAttribute("Score",0);
-                compteur++;
-            }
-
-            session.setAttribute("tempsRestant", 30); // Durée en secondes
-        } else if (difficulte.equals("moyen")) {
-            // Pour le mode moyen, afficher quatre propositions et donner 15 secondes
-            Nb_props= 3;
-            if(compteur == 0){
-                session.setAttribute("Score",0);
-                compteur++;
-            }
-            session.setAttribute("tempsRestant", 15); // Durée en secondes
-        } else if (difficulte.equals("difficile")) {
-            Nb_props= 0;
-            if(compteur == 0){
-                session.setAttribute("Score",0);
-                compteur++;
-            }
-            session.setAttribute("tempsRestant", 10); // Durée en secondes
-        } else {
-            Nb_props = 0;
+        while (liste_pays_deja_sortie.contains(question.getCode())){
+            question = questionFuture.get();
         }
+
+        liste_pays_deja_sortie.add(question.getCode());
+
+        Nb_props = Partie.DebutPartie(difficulte);
+        if(compteur == 0){
+            session.setAttribute("Score",0);
+            compteur++;
+        }
+
+
+
         //Vérification du nombre de questions posées
         Integer nombreQuestions = (Integer) session.getAttribute("nombreQuestions");
         if (nombreQuestions == null) {
@@ -85,9 +75,9 @@ public class IndexController {
         }
 
 
-
+        Pays finalQuestion = question;
         CompletableFuture<ArrayList<Pays>> propositionFuture = CompletableFuture.supplyAsync(() -> {
-            ArrayList<Pays> proposition = Proposition.Proposition_Drapeau(question.getCode(),Nb_props);
+            ArrayList<Pays> proposition = Proposition.Proposition_Drapeau(finalQuestion.getCode(),Nb_props);
             return proposition;
         });
 
@@ -97,7 +87,7 @@ public class IndexController {
 
 
 
-
+        session.setAttribute("liste_pays_sortie",liste_pays_deja_sortie);
         model.addAttribute("appName", appName);
         model.addAttribute("Question", question);
         model.addAttribute("Proposition", proposition);

@@ -17,7 +17,6 @@ public class HomeController {
             session.setAttribute("Score",0);
         }
 
-
         return "accueil"; // Renvoie la page de choix de la difficulté
     }
 

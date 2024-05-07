@@ -1,6 +1,10 @@
 package com.guesser.guesser;
 
+import Flag.modele.Ipartie;
+import Flag.modele.Partie;
+import Flag.modele.Resultat;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +15,8 @@ import java.text.Normalizer;
 
 @RestController
 public class VerificationController {
+    @Autowired
+    private Ipartie Partie;
 
     public static String removeAccent(String source) {
         return Normalizer.normalize(source, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
@@ -20,40 +26,19 @@ public class VerificationController {
     public Boolean Verif(Model model, HttpSession session,@RequestParam("difficulte")String difficulte, @RequestParam("Code_bon") String Bonne_reponse, @RequestParam("Code_joueur") String reponse_joueur){
 
         boolean isCorrect;
-        if (difficulte.equals("difficile")){
-            Bonne_reponse= removeAccent(Bonne_reponse);
-            if(Bonne_reponse.equalsIgnoreCase(reponse_joueur)) {
-                int Score = (int) session.getAttribute("Score");
-                int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
-                NB_QUESTION++;
-                Score++;
-                session.setAttribute("Nombre_Question",NB_QUESTION);
-                session.setAttribute("Score", Score);
+        Bonne_reponse= removeAccent(Bonne_reponse);
+        reponse_joueur = removeAccent(reponse_joueur);
+        int Score = (int) session.getAttribute("Score");
+        int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
 
-                return true;
-            }else{
-                int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
-                NB_QUESTION++;
-                session.setAttribute("Nombre_Question",NB_QUESTION);
+        Resultat verification = Partie.Verification(Bonne_reponse,reponse_joueur,Score,NB_QUESTION);
 
-                return false;
-            }
-        }
-        else if(Bonne_reponse.equals(reponse_joueur)){
-            int Score = (int) session.getAttribute("Score");
-            int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
-            NB_QUESTION++;
-            Score++;
-            session.setAttribute("Nombre_Question",NB_QUESTION);
-            session.setAttribute("Score",Score);
-            isCorrect=true;
-            return isCorrect;
-        }else{
-            int NB_QUESTION = (int) session.getAttribute("Nombre_Question");
-            NB_QUESTION++;
-            session.setAttribute("Nombre_Question",NB_QUESTION);
-            isCorrect=false;
-            return isCorrect;
-        }
+
+        session.setAttribute("Nombre_Question",verification.nb_questions);
+        session.setAttribute("Score", verification.nb_questions);
+        return verification.estCorrect;
+
     }
+
+
 }
