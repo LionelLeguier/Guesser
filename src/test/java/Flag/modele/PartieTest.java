@@ -54,7 +54,7 @@ class PartieTest {
         Resultat resultatIncorrect = votreObjet.Verification("bonne réponse", "mauvaise réponse", 0, 0);
         assertEquals(0, resultatIncorrect.score);
         assertEquals(0, resultatIncorrect.nb_questions);
-        assertEquals(false, resultatIncorrect.estCorrect);
+        assertFalse(resultatIncorrect.estCorrect);
     }
 
 }
