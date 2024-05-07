@@ -20,15 +20,21 @@ import java.util.concurrent.ExecutionException;
 public class IndexController {
     @Value("${spring.application.name}")
     private String appName;
-    @Autowired
-    private Iquizz Quizz;
-    @Autowired
-    private IpropFlag Proposition;
-    @Autowired
-    private Ipartie Partie;
+
+    private final Iquizz Quizz;
+
+    private final IpropFlag Proposition;
+
+    private final Ipartie Partie;
     private int compteur = 0;
 private ArrayList<String> liste_pays_deja_sortie = new ArrayList<String>();
 
+
+public IndexController(Iquizz Quizz,IpropFlag Proposition,Ipartie Partie){
+    this.Quizz = Quizz;
+    this.Proposition = Proposition;
+    this.Partie = Partie;
+}
 
 
 

@@ -15,8 +15,13 @@ import java.text.Normalizer;
 
 @RestController
 public class VerificationController {
-    @Autowired
-    private Ipartie Partie;
+
+    private final Ipartie Partie;
+
+
+    public VerificationController(Ipartie Partie){
+        this.Partie = Partie;
+    }
 
     public static String removeAccent(String source) {
         return Normalizer.normalize(source, Normalizer.Form.NFD).replaceAll("[\u0300-\u036F]", "");
