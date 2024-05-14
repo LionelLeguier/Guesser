@@ -1,5 +1,5 @@
 # Guesser
-## Réalisé par Essame Joël, Leulmi Gabriel, Leguier Lionel et Napieraj Lenny.
+## Réalisé par Essame Joël, Leguier Lionel, Leulmi Gabriel et Napieraj Lenny.
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtkRKBDZ_BsSpschjp8hOVw4gYjKJAzDCzvQ&usqp=CAU)
 
