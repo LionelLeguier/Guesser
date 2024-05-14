@@ -8,10 +8,12 @@ Nous vous présentons notre projet de jeu "Guesser", développé dans le cadre d
 
 Dans le monde numérique d'aujourd'hui, les jeux en ligne sont devenus un divertissement populaire et omniprésent. Notre objectif est de créer un jeu simple mais captivant qui puisse être joué par un large public. Le jeu "Guesser” s'inspire des classiques jeux de devinettes.
 
+Notre jeu propose aux joueurs d’enrichir leur culture générale. 
+
 Le jeu a été développé en utilisant une combinaison de langages et de technologies web, notamment HTML, CSS, JavaScript et Java pour l'interface utilisateur.
 
 ## But du jeu : 
-Notre jeu propose aux joueurs d’enrichir leur culture générale. Le but est très simple en lui même les joueurs auront un éventail de drapeaux nationaux, de régions et d’entités économiques et auront pour défi de deviner à quelle entité chaque drapeau correspond. 
+Le but est très simple en lui même les joueurs auront un éventail de drapeaux nationaux, de régions et d’entités économiques et auront pour défi de deviner à quelle entité chaque drapeau correspond. 
 Il y a 10 pays à deviner par partie.
 
 Après avoir répondu aux 10 questions, la partie est finie et notre score est affiché.
