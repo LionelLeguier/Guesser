@@ -27,7 +27,7 @@ Il y a trois de mode de difficultés :
 
 1. Lorsque je suis sur le site, je lance le jeu où l'on doit deviner les drapeaux.
 2. On doit choisir la difficulté du jeu ( facile: 2 propositions de réponses, moyen: 4 propositions de réponses, dur aucune proposition de réponses, il faut écrire l'entité)
-3. Après avoir choisi la difficulté du jeu, la partie se lance. Il y a un drapeau qui s'affiche et l'on doit deviner l'entité correspondant. Si l’on répond bien on a un point qui s’ajoute à notre score. Si l’on a fait une erreur, notre score ne change pas.
+3. Après avoir choisi la difficulté du jeu, la partie se lance. Il y a un drapeau qui s'affiche et l'on doit deviner l'entité correspondant. Si l’on répond bien on a un point qui s’ajoute à notre score. Si l’on a fait une erreur, notre score ne change pas. Au cours d'une partie l'utilisateur ne peut pas deviner deux fois la même entité.
 4. Après avoir répondu aux 10 questions, la partie est finie et notre score est affiché. Un bouton qui permet de revenir sur la page d'accueil et de recommencer une partie.
 
 
