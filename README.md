@@ -1,4 +1,4 @@
-# Guesser
+# Guesser réalisé par Essame Joël, Leulmi Gabriel, Leguier Lionel et Napieraj Lenny.
 
 ![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtkRKBDZ_BsSpschjp8hOVw4gYjKJAzDCzvQ&usqp=CAU)
 
