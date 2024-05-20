@@ -17,7 +17,7 @@ import java.io.IOException;
 @Service
 public class Partie implements Ipartie {
     public Boolean FinDePartie(int NombreQuestion){
-         if(NombreQuestion >=5){
+         if(NombreQuestion >=10){
                 return true;
          }else{
              return false;
