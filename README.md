@@ -27,9 +27,13 @@ Il y a trois de mode de difficultés :
 
 ## Story : 
 
-1. Lorsque je suis sur le site, je lance le jeu où l'on doit deviner les drapeaux.
-2. On doit choisir la difficulté du jeu ( facile: 2 propositions de réponses, moyen: 4 propositions de réponses, dur aucune proposition de réponses, il faut écrire l'entité)
-3. Après avoir choisi la difficulté du jeu, la partie se lance. Il y a un drapeau qui s'affiche et l'on doit deviner l'entité correspondant. Si l’on répond bien on a un point qui s’ajoute à notre score. Si l’on a fait une erreur, notre score ne change pas. Au cours d'une partie l'utilisateur ne peut pas deviner deux fois la même entité.
-4. Après avoir répondu aux 10 questions, la partie est finie et notre score est affiché. Un bouton qui permet de revenir sur la page d'accueil et de recommencer une partie.
+1. Pour lancer le jeu, je dois installer le projet.
+2. L'extraire de sa forme compressée.
+3. Ouvrir un IDE. Lancer le fichier GuesserApplication.
+4. Allez sur un navigateur de recherche et rechercher : http://localhost:8080/
+5. Lorsque je suis sur le site, j'ai le choix entre commencer une nouvelle partie ou reprendre une ancienne. Si je veux reprendre une ancienne partie, je dois écrire l'id de la partie qui m'a été fourni.
+6. On doit choisir la difficulté du jeu.
+7. Après avoir choisi la difficulté du jeu, la partie se lance. Il y a un drapeau qui s'affiche et l'on doit deviner l'entité correspondante. Si l’on répond bien on a un point qui s’ajoute à notre score. Si l’on a fait une erreur, notre score ne change pas. Au cours d'une partie, l'utilisateur ne peut pas deviner deux fois la même entité. J'ai la possiblité de mettre en pause la partie et de la reprendre plus tard si je clique sur le bouton pause. Un id me sera fourni et lorsque je souhaiterais reprendre ma partie, il faudra fournir cette id.
+8. Après avoir répondu aux 10 questions, la partie est finie et notre score est affiché. Un bouton qui permet de revenir sur la page d'accueil et de recommencer une partie.
 
 
