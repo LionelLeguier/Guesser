@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reprendre une Partie</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen">
+<div class="max-w-md p-8 bg-white rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold mb-4 text-center">Reprendre une Partie</h1>
+    <form onsubmit="submitForm(); return false;">
+        <div class="mb-4">
+            <label for="gameId" class="block text-gray-700 text-sm font-bold mb-2">ID de la Partie:</label>
+            <input type="text" id="gameId" name="gameId" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        </div>
+        <div class="flex justify-around">
+            <button type="submit" class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Reprendre Partie</button>
+        </div>
+    </form>
+</div>
+<script>
+    // Fonction pour soumettre le formulaire après avoir récupéré les valeurs
+    function submitForm() {
+        var gameId = document.getElementById("gameId").value;
+        // Rediriger l'utilisateur vers la page de reprise de partie avec les paramètres gameId et difficulte
+        window.location.href = "/recupererSauvegarde?gameId=" + gameId;
+    }
+</script>
+</body>
+</html>

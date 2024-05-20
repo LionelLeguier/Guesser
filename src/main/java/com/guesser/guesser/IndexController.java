@@ -36,11 +36,23 @@ public IndexController(Iquizz Quizz,IpropFlag Proposition,Ipartie Partie){
     this.Partie = Partie;
 }
 
+    @GetMapping("/recupererSauvegarde")
+    public String reprendrePartie(HttpSession session, @RequestParam("gameId") String Id) {
+        SauvegardePartie save = Partie.renvoieSauvegarde(Id);
+        // Mettre à jour les attributs de la session avec ce que renvoie la sauvegarde
+        session.setAttribute("Score", save.getScore());
+        session.setAttribute("Nombre_Question", save.getNbquestion());
+        session.setAttribute("liste_pays_sortie", save.getListeQuestionDejaSortie());
+        session.setAttribute("difficulte", save.getDifficulte());
+        return "redirect:/jeu?difficulte=" + save.getDifficulte();
+    }
+
 
 
 
     @GetMapping("/jeu")
     public String home(final Model model, HttpSession session,@RequestParam("difficulte")String difficulte) throws ExecutionException, InterruptedException {
+        session.setAttribute("difficulte",difficulte);
         if((session.getAttribute("Nombre_Question") != null) && Partie.FinDePartie((int) session.getAttribute("Nombre_Question"))){
             String messageEvaluation= Quizz.ScoreToString((int)session.getAttribute("Score"));
             session.setAttribute("MessageFin",messageEvaluation);
@@ -74,11 +86,6 @@ public IndexController(Iquizz Quizz,IpropFlag Proposition,Ipartie Partie){
 
 
 
-        //Vérification du nombre de questions posées
-        Integer nombreQuestions = (Integer) session.getAttribute("nombreQuestions");
-        if (nombreQuestions == null) {
-            nombreQuestions = 0;
-        }
 
 
         Pays finalQuestion = question;
