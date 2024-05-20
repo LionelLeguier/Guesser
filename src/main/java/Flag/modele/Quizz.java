@@ -25,14 +25,14 @@ public class Quizz implements Iquizz{
     public String ScoreToString(int Score){
 
         String messageEvaluation;
-        if (Score >= 5) {
+        if (Score == 10 ) {
             messageEvaluation = "C'est parfait !";
         }
-        else if (Score >= 3) {
+        else if (Score >= 7) {
             messageEvaluation = "C'est presque parfait !";
 
 
-        } else if (Score >= 2) {
+        } else if (Score >= 4) {
             messageEvaluation = "Vous pouvez mieux faire !";
 
 
