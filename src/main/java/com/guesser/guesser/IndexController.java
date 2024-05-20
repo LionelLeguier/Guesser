@@ -43,7 +43,7 @@ public IndexController(Iquizz Quizz,IpropFlag Proposition,Ipartie Partie){
         session.setAttribute("Score", save.getScore());
         session.setAttribute("Nombre_Question", save.getNbquestion());
         session.setAttribute("liste_pays_sortie", save.getListeQuestionDejaSortie());
-        session.setAttribute("difficulte", save.getDifficulte());
+
         return "redirect:/jeu?difficulte=" + save.getDifficulte();
     }
 
