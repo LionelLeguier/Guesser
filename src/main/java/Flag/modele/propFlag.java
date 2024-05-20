@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class propFlag implements IpropFlag{
@@ -18,35 +16,44 @@ public class propFlag implements IpropFlag{
     ArrayList<Pays> Liste_proposition = new ArrayList<Pays>();
     String url_drapeau = "https://flagcdn.com/w320/";
     Random random = new Random();
+
     @Override
-    public ArrayList<Pays> Proposition_Drapeau(String Code_Pays_Question,int Nb_prop) {
+    public ArrayList<Pays> Proposition_Drapeau(String Code_Pays_Question, int Nb_prop) {
+        // Initialisation de la liste de propositions
+        ArrayList<Pays> Liste_proposition = new ArrayList<>();
+        Set<Integer> Liste_chiffre_hasard = new HashSet<>();
+        List<String> Liste_avec_Clef = new ArrayList<>();
 
-        Mono<String> bodyMono = client.get().uri("https://flagcdn.com/fr/codes.json").retrieve().bodyToMono(String.class) // Récupérer le corps de la réponse comme une chaîne de caractères
+        // Récupération du JSON contenant les codes de pays
+        Mono<String> bodyMono = client.get()
+                .uri("https://flagcdn.com/fr/codes.json")
+                .retrieve()
+                .bodyToMono(String.class)
                 .doOnNext(response -> {
-                    Liste_proposition.clear();
-
                     Gson gson = new Gson();
                     JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
-                    Set<String> liste_Clef =  jsonObject.keySet();
+                    Set<String> liste_Clef = jsonObject.keySet();
                     Liste_avec_Clef.addAll(liste_Clef);
-                    while(Liste_chiffre_hasard.size() < Nb_prop){
+
+                    // Sélection des propositions uniques aléatoires
+                    while (Liste_chiffre_hasard.size() < Nb_prop) {
                         int nouveau_chiffre = random.nextInt(Liste_avec_Clef.size());
-                        if (!Liste_chiffre_hasard.contains(nouveau_chiffre) && !(jsonObject.get(Liste_avec_Clef.get(nouveau_chiffre)).toString().equals(Code_Pays_Question))){
+                        String codePays = Liste_avec_Clef.get(nouveau_chiffre);
+                        String nomPays = jsonObject.get(codePays).toString().replace("\"", "");
+
+                        if (!Liste_chiffre_hasard.contains(nouveau_chiffre) && !codePays.equals(Code_Pays_Question)) {
                             Liste_chiffre_hasard.add(nouveau_chiffre);
+                            String url_drapeau = "https://flagcdn.com/w320/" + codePays + ".png";
+                            Liste_proposition.add(new Pays(url_drapeau, nomPays, codePays));
                         }
                     }
-                    for(int i=0;i<Liste_chiffre_hasard.size();i++){
-                        url_drapeau = "https://flagcdn.com/w320/";
-                        url_drapeau += Liste_avec_Clef.get(Liste_chiffre_hasard.get(i))+".png";
-                        Liste_proposition.add(new Pays(url_drapeau,jsonObject.get(Liste_avec_Clef.get(Liste_chiffre_hasard.get(i))).toString().replace("\"",""),Liste_avec_Clef.get(i)));
-                    }
-                    Liste_chiffre_hasard.clear();
-
                 });
 
-        String response = bodyMono.block();
+        // Bloquer jusqu'à ce que la réponse soit reçue
+        bodyMono.block();
 
         return Liste_proposition;
     }
+
 }
 
