@@ -9,6 +9,8 @@ import com.opencsv.exceptions.CsvException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -94,7 +96,11 @@ public class Partie implements Ipartie {
         ArrayList<String> liste = new ArrayList<>();
         SauvegardePartie save = null;
 
-        try (CSVReader reader = new CSVReader(new FileReader("/Users/gabrielleulmi/Documents/Guesser/output.csv"))) {
+        // Construire le chemin vers le fichier
+        String relativePath = "output.csv";
+        Path filePath = Paths.get("").toAbsolutePath().resolve(relativePath);
+
+        try (CSVReader reader = new CSVReader(new FileReader(filePath.toFile()))) {
             List<String[]> records = reader.readAll();
             for (String[] record : records) {
                 if (record[0].equals(Id)) {
@@ -111,7 +117,9 @@ public class Partie implements Ipartie {
             }
         } catch (IOException | CsvException e) {
             e.printStackTrace();
+            // Gérer l'exception d'une manière appropriée selon votre cas d'utilisation
         }
         return save;
     }
+
 }
