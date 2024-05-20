@@ -13,7 +13,7 @@ Notre jeu propose aux joueurs d’enrichir leur culture générale.
 Le jeu a été développé en utilisant une combinaison de langages et de technologies web, notamment HTML, CSS, JavaScript et Java pour l'interface utilisateur.
 
 ## But du jeu : 
-Le but est très simple en lui même les joueurs auront un éventail de drapeaux nationaux, de régions et d’entités économiques et auront pour défi de deviner à quelle entité chaque drapeau correspond. 
+Le but est très simple en lui même les joueurs auront un panel de drapeaux nationaux, de régions et d’entités économiques et auront pour défi de deviner à quelle entité chaque drapeau correspond. 
 Il y a 10 pays à deviner par partie.
 
 Après avoir répondu aux 10 questions, la partie est finie et notre score est affiché.
@@ -33,7 +33,7 @@ Il y a trois de mode de difficultés :
 4. Allez sur un navigateur de recherche et rechercher : http://localhost:8080/
 5. Lorsque je suis sur le site, j'ai le choix entre commencer une nouvelle partie ou reprendre une ancienne. Si je veux reprendre une ancienne partie, je dois écrire l'id de la partie qui m'a été fourni.
 6. On doit choisir la difficulté du jeu.
-7. Après avoir choisi la difficulté du jeu, la partie se lance. Il y a un drapeau qui s'affiche et l'on doit deviner l'entité correspondante. Si l’on répond bien on a un point qui s’ajoute à notre score. Si l’on a fait une erreur, notre score ne change pas. Au cours d'une partie, l'utilisateur ne peut pas deviner deux fois la même entité. J'ai la possiblité de mettre en pause la partie et de la reprendre plus tard si je clique sur le bouton pause. Un id me sera fourni et lorsque je souhaiterais reprendre ma partie, il faudra fournir cette id.
+7. Après avoir choisi la difficulté du jeu, la partie se lance. Il y a un drapeau qui s'affiche et l'on doit deviner l'entité correspondante. Si l’on répond bien on a un point qui s’ajoute à notre score. Si l’on a fait une erreur, notre score ne change pas. Au cours d'une partie, l'utilisateur ne peut pas deviner deux fois la même entité et les drapeaux sont générés de manière aléatoire. J'ai la possibilité de mettre en pause la partie et de la reprendre plus tard si je clique sur le bouton pause. Un id me sera fourni et lorsque je souhaiterais reprendre ma partie, il faudra fournir cette id.
 8. Après avoir répondu aux 10 questions, la partie est finie et notre score est affiché. Un bouton qui permet de revenir sur la page d'accueil et de recommencer une partie.
 
 
